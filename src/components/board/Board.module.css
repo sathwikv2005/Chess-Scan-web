@@ -1,0 +1,149 @@
+.wrapper {
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.board {
+	width: 90%;
+	height: 90%;
+
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	grid-template-rows: repeat(8, 1fr);
+
+	aspect-ratio: 1;
+	position: relative;
+}
+
+.square {
+	position: relative;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	cursor: pointer;
+	user-select: none;
+}
+
+.light {
+	background: var(--board-white);
+}
+
+.dark {
+	background: var(--board-black);
+}
+
+.piece {
+	width: 85%;
+	height: 85%;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	cursor: grab;
+	z-index: 2;
+}
+
+.piece svg {
+	width: 100%;
+	height: 100%;
+	animation: 1s ease-out drop forwards;
+}
+
+@keyframes drop {
+	0% {
+		opacity: 0.2;
+		transform: translateY(-20px) rotate(-45deg);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0px) rotate(0deg);
+	}
+}
+
+.white {
+	filter: drop-shadow(0 1px 3px rgb(0, 0, 0, 0.8));
+
+	color: var(--piece-white);
+}
+
+.black {
+	color: var(--piece-black);
+}
+
+.picker {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+
+	transform: translate(-50%, -50%);
+
+	background: var(--bg2);
+	border: 1px solid var(--redish-brown);
+	border-radius: 12px;
+
+	padding: 10px;
+
+	z-index: 1000;
+
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.pieceGrid {
+	display: grid;
+	grid-template-columns: repeat(4, 50px);
+	gap: 8px;
+}
+
+.pickButton {
+	width: 50px;
+	height: 50px;
+
+	border: none;
+	border-radius: 8px;
+
+	background: var(--darker-text);
+	cursor: pointer;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.pickButton svg {
+	width: 34px;
+	height: 34px;
+	filter: drop-shadow(0 1px 3px rgb(0, 0, 0, 0.4));
+}
+
+.pickButton:hover,
+.piece:hover {
+	transform: translateY(-3px);
+	filter: brightness(1.2);
+}
+
+.deleteButton {
+	margin-top: 10px;
+
+	width: 100%;
+
+	border: none;
+	border-radius: 8px;
+
+	padding: 8px;
+
+	background: #a33;
+	color: white;
+
+	cursor: pointer;
+}
+
+.deleteButton:hover {
+	filter: brightness(1.15);
+}

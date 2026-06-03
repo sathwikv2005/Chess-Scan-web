@@ -13,6 +13,11 @@
 	--font-poppins: 'Poppins', sans-serif;
 	--font-ubuntu: 'Ubuntu', sans-serif;
 	--font-big-shoulders: 'Big Shoulders', sans-serif;
+
+	--piece-white: #f8f5ee;
+	--piece-black: #5c5956;
+	--board-white: #ebecd0;
+	--board-black: #739452;
 }
 
 * {
@@ -31,5 +36,4 @@ body {
 #root,
 body {
 	width: 100dvw;
-	height: 100dvh;
 }
