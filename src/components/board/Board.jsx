@@ -29,22 +29,23 @@ const PIECES = {
 function fenToBoard(fen) {
 	const placement = fen.split(' ')[0]
 
-	const board = []
+	const board = Array.from({ length: 8 }, () => Array(8).fill(null))
 
-	for (const rank of placement.split('/')) {
-		const row = []
+	const ranks = placement.split('/')
 
-		for (const char of rank) {
+	for (let row = 0; row < Math.min(ranks.length, 8); row++) {
+		let col = 0
+
+		for (const char of ranks[row]) {
+			if (col >= 8) break
+
 			if (/\d/.test(char)) {
-				for (let i = 0; i < Number(char); i++) {
-					row.push(null)
-				}
+				col += Number(char)
 			} else {
-				row.push(char)
+				board[row][col] = char
+				col++
 			}
 		}
-
-		board.push(row)
 	}
 
 	return board
