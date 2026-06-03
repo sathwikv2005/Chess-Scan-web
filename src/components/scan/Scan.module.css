@@ -1,0 +1,36 @@
+.container {
+	margin-top: 4rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.wrapper {
+	width: 90%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.box {
+	background-color: var(--bg2);
+	border: 1px solid var(--redish-brown);
+	border-radius: 8px;
+	aspect-ratio: 1;
+	width: 47.5%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@media (max-width: 750px) {
+	.wrapper {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 2rem;
+		width: 95%;
+	}
+	.box {
+		width: 95%;
+	}
+}

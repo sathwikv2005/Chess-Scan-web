@@ -1,0 +1,27 @@
+.inputBox {
+	width: 90%;
+	height: 90%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+
+.inputBox:hover {
+	cursor: pointer;
+}
+
+.icon {
+	font-size: 30px;
+	color: var(--blue-text);
+}
+
+.text {
+	color: var(--darker-text);
+}
+
+.image {
+	width: 100%;
+	aspect-ratio: 1;
+}
