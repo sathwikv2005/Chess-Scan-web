@@ -1,0 +1,56 @@
+.container {
+	margin-top: 4rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.header {
+	width: min(90%, 700px);
+	text-align: center;
+
+	background: linear-gradient(
+		45deg,
+		var(--default-text) 0%,
+		var(--redish-brown) 50%,
+		var(--warm-orange) 100%
+	);
+
+	background-size: 200% auto;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+
+	font-family: var(--font-big-shoulders);
+	font-size: 50px;
+	font-weight: 1000;
+
+	animation:
+		shimmer 6s linear infinite,
+		glow 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: 0% center;
+	}
+	50% {
+		background-position: 100% center;
+	}
+	100% {
+		background-position: 0% center;
+	}
+}
+
+@keyframes glow {
+	0%,
+	100% {
+		filter: drop-shadow(0 0 4px rgba(255, 180, 100, 0.15))
+			drop-shadow(0 0 8px rgba(255, 180, 100, 0.1));
+	}
+
+	50% {
+		filter: drop-shadow(0 0 8px rgba(255, 180, 100, 0.3))
+			drop-shadow(0 0 16px rgba(255, 180, 100, 0.2));
+	}
+}

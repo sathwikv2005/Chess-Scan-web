@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import Home from './pages/Home'
 
 function App() {
-	return <>Hello!!!</>
+	return <Home />
 }
 
 export default App
