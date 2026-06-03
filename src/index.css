@@ -1,0 +1,35 @@
+:root {
+	--bg: black;
+	--dark-red: #2b1c1c;
+	--bg2: #131818;
+	--default-text: white;
+	--darker-text: rgba(255, 255, 255, 0.7);
+	--blue-text: #75dff1;
+	--warm-orange: #ffcc80;
+	--shadow: rgba(255, 204, 128, 0.35);
+	--shadow2: rgba(240, 170, 66, 0.363);
+	/* --shadow: rgba(255, 255, 255, 0.3); */
+	--redish-brown: #a78c8c;
+	--font-poppins: 'Poppins', sans-serif;
+	--font-ubuntu: 'Ubuntu', sans-serif;
+	--font-big-shoulders: 'Big Shoulders', sans-serif;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	background: var(--bg);
+	color: var(--default-text);
+	font-family: var(--font-poppins);
+}
+
+#root,
+body {
+	width: 100dvw;
+	height: 100dvh;
+}
