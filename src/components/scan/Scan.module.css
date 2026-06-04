@@ -1,5 +1,5 @@
 .container {
-	margin-top: 4rem;
+	margin-top: 2rem;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -22,6 +22,10 @@
 	align-items: center;
 }
 
+.util {
+	width: 90%;
+}
+
 @media (max-width: 750px) {
 	.wrapper {
 		flex-direction: column;
@@ -31,6 +35,9 @@
 		width: 95%;
 	}
 	.box {
+		width: 95%;
+	}
+	.util {
 		width: 95%;
 	}
 }

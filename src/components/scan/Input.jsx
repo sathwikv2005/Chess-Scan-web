@@ -3,8 +3,7 @@ import styles from './Input.module.css'
 import { useRef, useState } from 'react'
 import Loading from '../loading/Loading'
 
-export default function Input() {
-	const [image, setImage] = useState(null)
+export default function Input({ image, setImage }) {
 	const [loading, setLoading] = useState(false)
 
 	const inputRef = useRef(null)
