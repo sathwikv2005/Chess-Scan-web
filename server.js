@@ -55,6 +55,10 @@ app.post('/api/getFen', upload.single('image'), async (req, res) => {
 	}
 })
 
+app.get('/ping', (req, res) => {
+	res.status(200).send('pong')
+})
+
 // Serve React build
 app.use(express.static(path.join(__dirname, 'dist')))
 
