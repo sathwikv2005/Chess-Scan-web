@@ -7,5 +7,11 @@ export default defineConfig({
 	server: {
 		host: '0.0.0.0',
 		allowedHosts: ['dev.lan', '.dev.lan', '192.168.1.47', 'localhost'],
+		proxy: {
+			'/api': {
+				target: 'http://localhost:3000',
+				changeOrigin: true,
+			},
+		},
 	},
 })

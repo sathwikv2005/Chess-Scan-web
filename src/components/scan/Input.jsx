@@ -3,9 +3,7 @@ import styles from './Input.module.css'
 import { useRef, useState } from 'react'
 import Loading from '../loading/Loading'
 
-export default function Input({ image, setImage }) {
-	const [loading, setLoading] = useState(false)
-
+export default function Input({ image, setImage, upload, loading, error }) {
 	const inputRef = useRef(null)
 
 	function handleInput() {
@@ -19,6 +17,7 @@ export default function Input({ image, setImage }) {
 
 		const url = URL.createObjectURL(file)
 		setImage(url)
+		upload(file)
 	}
 
 	if (loading) return <Loading />
@@ -34,6 +33,12 @@ export default function Input({ image, setImage }) {
 			/>
 
 			<div className={styles.inputBox} onClick={handleInput}>
+				{error && (
+					<div className={styles.error}>
+						<span className={styles.errorIcon}>⚠</span>
+						<span>{error}</span>
+					</div>
+				)}
 				{image ? <Image image={image} /> : <Default />}
 			</div>
 		</>
