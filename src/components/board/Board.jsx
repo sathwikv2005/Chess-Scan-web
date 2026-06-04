@@ -89,6 +89,7 @@ export default function Board({ fen, setFen }) {
 	const [dragged, setDragged] = useState(null)
 
 	const boardRef = useRef(null)
+	const droppedRef = useRef(false)
 
 	useEffect(() => {
 		setBoard(fenToBoard(fen))
@@ -128,6 +129,8 @@ export default function Board({ fen, setFen }) {
 	function handleDrop(row, col) {
 		if (!dragged) return
 
+		droppedRef.current = true
+
 		setBoard((prev) => {
 			const next = prev.map((r) => [...r])
 
@@ -146,10 +149,14 @@ export default function Board({ fen, setFen }) {
 				{board.map((row, rowIndex) =>
 					row.map((piece, colIndex) => {
 						const dark = (rowIndex + colIndex) % 2
-
+						const nearLeft = colIndex <= 3
+						const nearRight = colIndex >= 4
+						const nearTop = rowIndex <= 3
+						const nearBottom = rowIndex >= 4
 						return (
 							<div
 								key={`${rowIndex}-${colIndex}`}
+								id={`${rowIndex}-${colIndex}`}
 								className={`${styles.square} ${dark ? styles.dark : styles.light}`}
 								onDragOver={(e) => e.preventDefault()}
 								onDrop={() => handleDrop(rowIndex, colIndex)}
@@ -169,11 +176,22 @@ export default function Board({ fen, setFen }) {
 												col: colIndex,
 											})
 										}
+										onDragEnd={() => {
+											if (!droppedRef.current && dragged) {
+												updateSquare(dragged.row, dragged.col, null)
+											}
+
+											droppedRef.current = false
+											setDragged(null)
+										}}
 									/>
 								)}
 
 								{selectedSquare?.row === rowIndex && selectedSquare?.col === colIndex && (
-									<div className={styles.picker} onClick={(e) => e.stopPropagation()}>
+									<div
+										className={`${styles.picker} ${nearRight && styles.pickerRight} ${nearBottom && styles.pickerBottom} ${nearLeft && styles.pickerLeft} ${nearTop && styles.pickerTop}`}
+										onClick={(e) => e.stopPropagation()}
+									>
 										<div className={styles.pieceGrid}>
 											{pieceOptions.map((option) => {
 												const { Icon, color } = PIECES[option]
@@ -215,11 +233,11 @@ export default function Board({ fen, setFen }) {
 	)
 }
 
-function Piece({ piece, onDragStart }) {
+function Piece({ piece, onDragStart, onDragEnd }) {
 	const { Icon, color } = PIECES[piece]
 
 	return (
-		<div draggable onDragStart={onDragStart} className={styles.piece}>
+		<div draggable onDragStart={onDragStart} className={styles.piece} onDragEnd={onDragEnd}>
 			<Icon className={color === 'white' ? styles.white : styles.black} />
 		</div>
 	)

@@ -82,7 +82,7 @@
 	top: 50%;
 	left: 50%;
 
-	transform: translate(-50%, -50%);
+	/* transform: translate(-50%, -50%); */
 
 	background: var(--bg2);
 	border: 1px solid var(--redish-brown);
@@ -93,6 +93,27 @@
 	z-index: 1000;
 
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.pickerLeft {
+	left: 0;
+	transform: none;
+}
+
+.pickerRight {
+	right: 0;
+	left: auto;
+	transform: none;
+}
+
+.pickerTop {
+	top: 100%;
+	bottom: auto;
+}
+
+.pickerBottom {
+	bottom: 100%;
+	top: auto;
 }
 
 .pieceGrid {
@@ -146,4 +167,21 @@
 
 .deleteButton:hover {
 	filter: brightness(1.15);
+}
+
+@media (max-width: 420px) {
+	.picker {
+		scale: 0.9;
+		padding: 10px;
+	}
+	.pickerLeft {
+		left: -35px;
+		transform: none;
+	}
+
+	.pickerRight {
+		right: -35px;
+		left: auto;
+		transform: none;
+	}
 }
