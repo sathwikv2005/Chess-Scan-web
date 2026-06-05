@@ -1,6 +1,8 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
+import PQueue from 'p-queue'
+
 import express from 'express'
 import multer from 'multer'
 import path from 'path'
@@ -10,6 +12,7 @@ import { fileURLToPath } from 'url'
 import { imageToFen, getBoardImg } from 'chess-scan'
 
 const app = express()
+
 const upload = multer({
 	storage: multer.memoryStorage(),
 	limits: {
@@ -22,6 +25,12 @@ const upload = multer({
 
 		cb(null, true)
 	},
+})
+
+export const inferenceQueue = new PQueue({
+	concurrency: 1,
+	timeout: 30_000,
+	throwOnTimeout: true,
 })
 
 const __filename = fileURLToPath(import.meta.url)
@@ -37,15 +46,27 @@ app.post('/api/getFen', upload.single('image'), async (req, res) => {
 			})
 		}
 
-		const buffer = req.file.buffer
+		//queue is full
+		if (inferenceQueue.size >= 10) {
+			return res.status(429).json({
+				error: 'Server is currently processing too many images. Please try again in a minute.',
+				queueLength: inferenceQueue.size,
+			})
+		}
 
-		const [fenResult, board] = await Promise.all([imageToFen(buffer), getBoardImg(buffer)])
+		const result = await inferenceQueue.add(async () => {
+			const buffer = req.file.buffer
 
-		res.json({
-			fen: fenResult.fen,
-			confidence: fenResult.confidence,
-			board: `data:image/png;base64,${Buffer.from(board).toString('base64')}`,
+			const [fenResult, board] = await Promise.all([imageToFen(buffer), getBoardImg(buffer)])
+
+			return {
+				fen: fenResult.fen,
+				confidence: fenResult.confidence,
+				board: `data:image/png;base64,${Buffer.from(board).toString('base64')}`,
+			}
 		})
+
+		res.json(result)
 	} catch (error) {
 		console.error(error)
 
