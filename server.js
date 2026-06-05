@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import PQueue from 'p-queue'
+import rateLimit from 'express-rate-limit'
 
 import express from 'express'
 import multer from 'multer'
@@ -27,6 +28,20 @@ const upload = multer({
 	},
 })
 
+const inferenceLimiter = rateLimit({
+	windowMs: 60 * 1000,
+	max: 5,
+	handler: (req, res) => {
+		res.status(429).json({
+			error: 'Too many requests',
+			retryAfter: Math.ceil(req.rateLimit.resetTime / 1000),
+		})
+	},
+	skip: (req) => {
+		return req.ip === '127.0.0.1' || req.ip === '::1'
+	},
+})
+
 export const inferenceQueue = new PQueue({
 	concurrency: 1,
 	timeout: 30_000,
@@ -37,6 +52,10 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const PORT = process.env.PORT || 3000
+
+app.set('trust proxy', 1)
+
+app.use('/api', inferenceLimiter)
 
 app.post('/api/getFen', upload.single('image'), async (req, res) => {
 	try {
