@@ -54,6 +54,17 @@
 	flex-shrink: 0;
 }
 
+.inputBox {
+	transition:
+		border-color 0.2s ease,
+		background-color 0.2s ease;
+}
+
+.dragging {
+	border-color: var(--dark-red);
+	background: rgba(255, 255, 255, 0.05);
+}
+
 @keyframes errorIn {
 	from {
 		opacity: 0;
